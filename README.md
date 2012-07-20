@@ -3,7 +3,7 @@ eval() - Dynamic expression evaluation
 
 This library was written for AutoHotkey v1.1.08.
 
-*WARNING - THIS LIBRARY ABUSES INTERNAL AHK STRUCTURES - IT IS GUARANTEED TO BE BROKEN BY A FUTURE AHK VERSION*
+**WARNING - THIS LIBRARY ABUSES INTERNAL AHK STRUCTURES - IT IS GUARANTEED TO BE BROKEN BY A FUTURE AHK VERSION**
 
 Readme
 ------
@@ -23,8 +23,10 @@ Limitations
 - Double-derefs are not supported yet
 - Clipboard is read-only
 - ClipboardAll doesn't work
+- `obj.field(something) := val` is not supported yet
+- Compound object field assignment is not supported yet
 
 Changelog
 ---------
 
-- *v1.0*: Initial release
+- **v1.0**: Initial release

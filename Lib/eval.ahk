@@ -17,7 +17,7 @@ eval(expr)
 	static ppTokens := NumGet(NumGet(&Func("___dynexpr") + A_PtrSize*2) + 8) + 3*A_PtrSize
 	try
 	{
-		toks := eval_ParseExpr(expr)
+		toks := eval_ParseExpr(expr) ; the returned object needs to be kept
 		pNewTokens := eval_ConvertTokens(toks)
 		pOldTokens := NumGet(ppTokens+0)
 		NumPut(pNewTokens, ppTokens+0)
@@ -582,7 +582,7 @@ eval_InfixToPostfix(infix, ByRef expr)
 			stack_count --, i ++
 			
 			in_param_list := stack[stack_count].pos
-			if stack[stack_count.1].sym = Syms.Func
+			if stack[stack_count-1].sym = Syms.Func
 				goto standard_pop_into_postfix
 		}else if (infix_symbol = Syms.CBracket) || (infix_symbol = Syms.CBrace)
 		{

@@ -445,7 +445,8 @@ eval_TokenizeInfixExpr(ByRef expr, stopAt="", ByRef i=1)
 				else op_end -- ; revert the ++op_end above
 			}
 			
-			followedByColon := SubStr(LTrim(SubStr(expr, op_end)), 1, 1) = ":"
+			afterwards := LTrim(SubStr(expr, op_end))
+			followedByColon := SubStr(afterwards, 1, 1) = ":" && SubStr(afterwards, 2, 1) != "="
 			
 			if isInt || isFloat
 			{
@@ -465,7 +466,7 @@ eval_TokenizeInfixExpr(ByRef expr, stopAt="", ByRef i=1)
 				tok.sym := Syms.LowNot
 			else if !followedByColon && op = "new"
 				tok.sym := Syms.NewObj, tok.val := "%FObjNew", tok.pcount := 1
-			else
+			else if !followedByColon
 			{
 				gosub _autoconcat
 				
@@ -490,7 +491,8 @@ eval_TokenizeInfixExpr(ByRef expr, stopAt="", ByRef i=1)
 				}else
 					; It's a function call
 					tok.sym := Syms.Func, tok.pcount := 0
-			}
+			}else if followedByColon
+				tok.sym := Syms.Operand, tok.val := op
 			
 			i := op_end - 1
 		}
